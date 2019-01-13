@@ -1,21 +1,24 @@
-from flask import Flask, render_template, url_for, request, redirect, jsonify, make_response, flash
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Category, CategoryItem, User
-from flask import session as login_session
 import random
 import string
 import json
 import httplib2
 import requests
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from database_setup import Base, Category, CategoryItem, User
+from flask import session as login_session
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
+from flask import (Flask, render_template, url_for,
+                   request, redirect, jsonify, make_response, flash)
 
 app = Flask(__name__)
 
-CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web']['client_id']
+CLIENT_ID = json.loads(open('client_secrets.json',
+                       'r').read())['web']['client_id']
 
 # Connect to Database
-engine = create_engine('sqlite:///itemcatalog.db', connect_args={'check_same_thread': False})
+engine = create_engine('sqlite:///itemcatalog.db',
+                       connect_args={'check_same_thread': False})
 Base.metadata.bind = engine
 
 # Create database session
@@ -25,7 +28,9 @@ session = DBSession()
 
 # User Helper Functions
 def createUser(login_session):
-    newUser = User(name=login_session['username'], email=login_session['email'], picture=login_session['picture'])
+    newUser = User(name=login_session['username'],
+                   email=login_session['email'],
+                   picture=login_session['picture'])
     session.add(newUser)
     session.commit()
     user = session.query(User).filter_by(email=login_session['email']).one()
@@ -41,7 +46,7 @@ def getUserID(email):
     try:
         user = session.query(User).filter_by(email=email).one()
         return user.id
-    except DoesNotExist:
+    except Exception:
         return None
 
 
@@ -54,7 +59,9 @@ def showCategories():
     # Get lastest 5 category items added
     categoryItems = session.query(CategoryItem).all()
 
-    return render_template('categories.html', categories=categories, categoryItems=categoryItems)
+    return render_template('categories.html',
+                           categories=categories,
+                           categoryItems=categoryItems)
 
 
 @app.route('/catalog/<int:catalog_id>')
@@ -70,12 +77,18 @@ def showCategory(catalog_id):
     categoryName = category.name
 
     # Get all items of a specific category
-    categoryItems = session.query(CategoryItem).filter_by(category_id=catalog_id).all()
+    categoryItems = (session.query(CategoryItem)
+                     .filter_by(category_id=catalog_id).all())
 
     # Get count of category items
-    categoryItemsCount = session.query(CategoryItem).filter_by(category_id=catalog_id).count()
+    categoryItemsCount = (session.query(CategoryItem)
+                          .filter_by(category_id=catalog_id).count())
 
-    return render_template('category.html', categories=categories, categoryItems=categoryItems, categoryName=categoryName, categoryItemsCount=categoryItemsCount)
+    return render_template('category.html',
+                           categories=categories,
+                           categoryItems=categoryItems,
+                           categoryName=categoryName,
+                           categoryItemsCount=categoryItemsCount)
 
 
 @app.route('/catalog/<int:catalog_id>/items/<int:item_id>')
@@ -86,7 +99,9 @@ def showCategoryItem(catalog_id, item_id):
     # Get creator of item
     creator = getUserInfo(categoryItem.user_id)
 
-    return render_template('categoryItem.html', categoryItem=categoryItem, creator=creator)
+    return render_template('categoryItem.html',
+                           categoryItem=categoryItem,
+                           creator=creator)
 
 
 @app.route('/catalog/add', methods=['GET', 'POST'])
@@ -107,7 +122,10 @@ def addCategoryItem():
             return redirect(url_for('addCategoryItem'))
 
         # Add category item
-        newCategoryItem = CategoryItem(name=request.form['name'], description=request.form['description'], category_id=request.form['category'], user_id=login_session['user_id'])
+        newCategoryItem = CategoryItem(name=request.form['name'],
+                                       description=request.form['description'],
+                                       category_id=request.form['category'],
+                                       user_id=login_session['user_id'])
         session.add(newCategoryItem)
         session.commit()
 
@@ -116,10 +134,12 @@ def addCategoryItem():
         # Get all categories
         categories = session.query(Category).all()
 
-        return render_template('addCategoryItem.html', categories=categories)
+        return render_template('addCategoryItem.html',
+                               categories=categories)
 
 
-@app.route('/catalog/<int:catalog_id>/items/<int:item_id>/edit', methods=['GET', 'POST'])
+@app.route('/catalog/<int:catalog_id>/items/<int:item_id>/edit',
+           methods=['GET', 'POST'])
 def editCategoryItem(catalog_id, item_id):
     # Check if user is logged in
     if 'username' not in login_session:
@@ -145,12 +165,17 @@ def editCategoryItem(catalog_id, item_id):
             categoryItem.description = request.form['description']
         if request.form['category']:
             categoryItem.category_id = request.form['category']
-        return redirect(url_for('showCategoryItem', catalog_id=categoryItem.category_id, item_id=categoryItem.id))
+        return redirect(url_for('showCategoryItem',
+                                catalog_id=categoryItem.category_id,
+                                item_id=categoryItem.id))
     else:
-        return render_template('editCategoryItem.html', categories=categories, categoryItem=categoryItem)
+        return render_template('editCategoryItem.html',
+                               categories=categories,
+                               categoryItem=categoryItem)
 
 
-@app.route('/catalog/<int:catalog_id>/items/<int:item_id>/delete', methods=['GET', 'POST'])
+@app.route('/catalog/<int:catalog_id>/items/<int:item_id>/delete',
+           methods=['GET', 'POST'])
 def deleteCategoryItem(catalog_id, item_id):
     # Check if user is logged in
     if 'username' not in login_session:
@@ -169,15 +194,18 @@ def deleteCategoryItem(catalog_id, item_id):
     if request.method == 'POST':
         session.delete(categoryItem)
         session.commit()
-        return redirect(url_for('showCategory', catalog_id=categoryItem.category_id))
+        return redirect(url_for('showCategory',
+                        catalog_id=categoryItem.category_id))
     else:
-        return render_template('deleteCategoryItem.html', categoryItem=categoryItem)
+        return render_template('deleteCategoryItem.html',
+                               categoryItem=categoryItem)
 
 
 @app.route('/login')
 def login():
     # Create anti-forgery state token
-    state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
+    state = (''.join(random.choice(string
+             .ascii_uppercase + string.digits) for x in xrange(32)))
     login_session['state'] = state
 
     return render_template('login.html', STATE=state)
@@ -220,13 +248,15 @@ def gconnect():
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError:
-        response = make_response(json.dumps('Failed to upgrade the authorization code.'), 401)
+        response = (make_response(json
+                    .dumps('Failed to upgrade the authorization code.'), 401))
         response.headers['Content-Type'] = 'application/json'
         return response
 
     # Check that the access token is valid.
     access_token = credentials.access_token
-    url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s' % access_token)
+    url = ('https://www.google\n'
+           'apis.com/oauth2/v1/tokeninfo?access_token=%s' % access_token)
     h = httplib2.Http()
     result = json.loads(h.request(url, 'GET')[1])
 
@@ -239,13 +269,15 @@ def gconnect():
     # Verify that the access token is used for the intended user.
     gplus_id = credentials.id_token['sub']
     if result['user_id'] != gplus_id:
-        response = make_response(json.dumps("Token's user ID doesn't match given user ID."), 401)
+        response = (make_response(json.dumps
+                    ("Token's user ID doesn't match given user ID."), 401))
         response.headers['Content-Type'] = 'application/json'
         return response
 
     # Verify that the access token is valid for this app.
     if result['issued_to'] != CLIENT_ID:
-        response = make_response(json.dumps("Token's client ID does not match app's."), 401)
+        response = (make_response(json.dumps
+                    ("Token's client ID does not match app's."), 401))
         print "Token's client ID does not match app's."
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -254,7 +286,8 @@ def gconnect():
     stored_gplus_id = login_session.get('gplus_id')
 
     if stored_access_token is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Current user is already connected.'), 200)
+        response = (make_response(json.dumps
+                    ('Current user is already connected.'), 200))
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -289,7 +322,8 @@ def gdisconnect():
     access_token = login_session.get('access_token')
 
     if access_token is None:
-        response = make_response(json.dumps('Current user not connected.'), 401)
+        response = (make_response(json.dumps
+                    ('Current user not connected.'), 401))
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -299,7 +333,8 @@ def gdisconnect():
 
     if result['status'] != '200':
         # For whatever reason, the given token was invalid.
-        response = make_response(json.dumps('Failed to revoke token for given user.'), 400)
+        response = (make_response(json.dumps
+                    ('Failed to revoke token for given user.'), 400))
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -313,8 +348,10 @@ def showCategoriesJSON():
 @app.route('/catalog/<int:catalog_id>/JSON')
 @app.route('/catalog/<int:catalog_id>/items/JSON')
 def showCategoryJSON(catalog_id):
-    categoryItems = session.query(CategoryItem).filter_by(category_id=catalog_id).all()
-    return jsonify(categoryItems=[categoryItem.serialize for categoryItem in categoryItems])
+    categoryItems = (session.query(CategoryItem)
+                     .filter_by(category_id=catalog_id).all())
+    return jsonify(categoryItems=[categoryItem
+                   .serialize for categoryItem in categoryItems])
 
 
 @app.route('/catalog/<int:catalog_id>/items/<int:item_id>/JSON')

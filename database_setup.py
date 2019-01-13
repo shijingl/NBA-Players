@@ -54,5 +54,6 @@ class CategoryItem(Base):
         }
 
 
-engine = create_engine('sqlite:///itemcatalog.db', connect_args={'check_same_thread': False})
+engine = create_engine('sqlite:///itemcatalog.db',
+                       connect_args={'check_same_thread': False})
 Base.metadata.create_all(engine)
