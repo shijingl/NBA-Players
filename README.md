@@ -1,7 +1,7 @@
-#####**Project Description**
+**Project Description**
 This project is a RESTful web application utilizing the Flask framework which accesses a SQL database that populates categories and their items. OAuth2 provides authentication for further CRUD functionality on the application. Currently OAuth2 is implemented for Google Accounts.
 
-Preparation 
+**Preparation** 
 1. vagrant set up. 
 Vagrant: https://github.com/gmawji/item-catalog
 Virtualbox: https://www.virtualbox.org/wiki/Downloads 
@@ -13,7 +13,7 @@ https://www.python.org/download/releases/2.7/
 3. Setup sqlalchemy package for Python. Please run: sudo pip install sqlalchemy 
 4. Setup flask framework for Python. Please run: sudo pip install flask
 
-How to Run 
+**How to Run** 
 1. set up application database
 python database_setup.py
 2. Insert fake players data 
@@ -23,7 +23,7 @@ python application.py
 4. Access the application locally using
 http://localhost:xxxx (In my Vagrantfile, I set it to be 44301)
 
-Using Google Login 
+**Using Google Login** 
 1. go to Google Dev Console
 https://accounts.google.com/ServiceLogin/signinchooser?service=cloudconsole&passive=1209600&osid=1&continue=https%3A%2F%2Fconsole.developers.google.com%2F%3Fref%3Dhttps%3A%2F%2Fwww.google.com%2F&followup=https%3A%2F%2Fconsole.developers.google.com%2F%3Fref%3Dhttps%3A%2F%2Fwww.google.com%2F&flowName=GlifWebSignIn&flowEntry=ServiceLogin
 2. Sign up or Login if promoted 
@@ -41,7 +41,7 @@ https://accounts.google.com/ServiceLogin/signinchooser?service=cloudconsole&pass
 14. Run the application again
 python application.py
 
-JSON Endpoints 
+**JSON Endpoints** 
 Catalog JSON: /catalog/JSON - Displays the whole catalog. Categories and all items. 
 Category JSON: /catalog/<int:catalog_id>/JSON - Displays all categories 
 Category Items JSON: /catalog/<int:catalog_id>/items/JSON - Displays items for a specific category
