@@ -43,6 +43,7 @@ https://accounts.google.com/ServiceLogin/signinchooser?service=cloudconsole&pass
 python application.py
 
 **JSON Endpoints**
+
 Catalog JSON: /catalog/JSON - Displays the whole catalog. Categories and all items. 
 Category JSON: /catalog/<int:catalog_id>/JSON - Displays all categories 
 Category Items JSON: /catalog/<int:catalog_id>/items/JSON - Displays items for a specific category
