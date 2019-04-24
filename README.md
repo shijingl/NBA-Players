@@ -33,7 +33,9 @@ python players.py
 3. Run the application 
 python application.py
 4. Access the application locally using
+```
 http://localhost:xxxx (In my Vagrantfile, I set it to be 44301)
+```
 
 **Using Google Login**
 1. go to Google Dev Console
