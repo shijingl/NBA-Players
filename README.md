@@ -59,7 +59,7 @@ python application.py
 
 **JSON Endpoints**
 
-Catalog JSON: /catalog/JSON - Displays the whole catalog. Categories and all items. 
-Category JSON: /catalog/<int:catalog_id>/JSON - Displays all categories 
-Category Items JSON: /catalog/<int:catalog_id>/items/JSON - Displays items for a specific category
-Category Item JSON: /catalog/<int:catalog_id>/items/<int:item_id>/JSON - Displays a specific category item
+1. Catalog JSON: /catalog/JSON - Displays the whole catalog. Categories and all items. 
+2. Category JSON: /catalog/<int:catalog_id>/JSON - Displays all categories 
+3. Category Items JSON: /catalog/<int:catalog_id>/items/JSON - Displays items for a specific category
+4. Category Item JSON: /catalog/<int:catalog_id>/items/<int:item_id>/JSON - Displays a specific category item
