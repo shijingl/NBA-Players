@@ -16,8 +16,7 @@ Vagrantfile:
 ```
 > https://s3.amazonaws.com/video.udacity-data.com/topher/2018/April/5acfbfa3_fsnd-virtual-machine/fsnd-virtual-machine.zip
 ```
-Run vagrant up
-Run vagrant ssh. If you can successfully log in, then you are good. 
+1. Run vagrant up, and then Run vagrant ssh. If you can successfully log in, then you are good. 
 2. Install Python 2.7.12
 ```
 https://www.python.org/download/releases/2.7/
