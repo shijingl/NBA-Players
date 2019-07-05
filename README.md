@@ -16,13 +16,27 @@ Vagrantfile:
 ```
 > https://s3.amazonaws.com/video.udacity-data.com/topher/2018/April/5acfbfa3_fsnd-virtual-machine/fsnd-virtual-machine.zip
 ```
-1. Run vagrant up, and then Run vagrant ssh. If you can successfully log in, then you are good. 
+1. Run 
+```
+vagrant up
+```
+, and then Run 
+```
+vagrant ssh
+```
+If you can successfully log in, then you are good. 
 2. Install Python 2.7.12
 ```
 https://www.python.org/download/releases/2.7/
 ```
-3. Setup sqlalchemy package for Python. Please run: sudo pip install sqlalchemy 
-4. Setup flask framework for Python. Please run: sudo pip install flask
+3. Setup sqlalchemy package for Python. Please run: 
+```
+sudo pip install sqlalchemy 
+```
+4. Setup flask framework for Python. Please run: 
+```
+sudo pip install flask
+```
 
 **How to Run** 
 1. set up application database
