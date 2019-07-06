@@ -25,6 +25,7 @@ vagrant up
 vagrant ssh
 ```
 If you can successfully log in, then you are good. 
+
 2. Install Python 2.7.12
 ```
 https://www.python.org/download/releases/2.7/
