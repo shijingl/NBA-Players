@@ -16,22 +16,42 @@ Vagrantfile:
 ```
 > https://s3.amazonaws.com/video.udacity-data.com/topher/2018/April/5acfbfa3_fsnd-virtual-machine/fsnd-virtual-machine.zip
 ```
-Run vagrant up
-Run vagrant ssh. If you can successfully log in, then you are good. 
+1. Run 
+```
+vagrant up
+```
+, and then Run 
+```
+vagrant ssh
+```
+If you can successfully log in, then you are good. 
+
 2. Install Python 2.7.12
 ```
 https://www.python.org/download/releases/2.7/
 ```
-3. Setup sqlalchemy package for Python. Please run: sudo pip install sqlalchemy 
-4. Setup flask framework for Python. Please run: sudo pip install flask
+3. Setup sqlalchemy package for Python. Please run: 
+```
+sudo pip install sqlalchemy 
+```
+4. Setup flask framework for Python. Please run: 
+```
+sudo pip install flask
+```
 
 **How to Run** 
 1. set up application database
+```
 python database_setup.py
+```
 2. Insert fake players data 
+```
 python players.py
+```
 3. Run the application 
+```
 python application.py
+```
 4. Access the application locally using
 ```
 http://localhost:xxxx (In my Vagrantfile, I set it to be 44301)
@@ -59,7 +79,7 @@ python application.py
 
 **JSON Endpoints**
 
-Catalog JSON: /catalog/JSON - Displays the whole catalog. Categories and all items. 
-Category JSON: /catalog/<int:catalog_id>/JSON - Displays all categories 
-Category Items JSON: /catalog/<int:catalog_id>/items/JSON - Displays items for a specific category
-Category Item JSON: /catalog/<int:catalog_id>/items/<int:item_id>/JSON - Displays a specific category item
+1. Catalog JSON: /catalog/JSON - Displays the whole catalog. Categories and all items. 
+2. Category JSON: /catalog/<int:catalog_id>/JSON - Displays all categories 
+3. Category Items JSON: /catalog/<int:catalog_id>/items/JSON - Displays items for a specific category
+4. Category Item JSON: /catalog/<int:catalog_id>/items/<int:item_id>/JSON - Displays a specific category item
