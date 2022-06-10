@@ -6,7 +6,7 @@ This project is a RESTful web application utilizing the Flask framework which ac
 1. vagrant set up. 
 Vagrant: 
 ```
-https://github.com/gmawji/item-catalog
+https://www.vagrantup.com/downloads
 ```
 Virtualbox: 
 ```
