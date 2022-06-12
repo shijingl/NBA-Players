@@ -205,7 +205,7 @@ def deleteCategoryItem(catalog_id, item_id):
 def login():
     # Create anti-forgery state token
     state = (''.join(random.choice(string
-             .ascii_uppercase + string.digits) for x in xrange(32)))
+             .ascii_uppercase + string.digits) for x in range(32)))
     login_session['state'] = state
 
     return render_template('login.html', STATE=state)
@@ -274,7 +274,7 @@ def gconnect():
     if result['issued_to'] != CLIENT_ID:
         response = (make_response(json.dumps
                     ("Token's client ID does not match app's."), 401))
-        print "Token's client ID does not match app's."
+        print("Token's client ID does not match app's.")
         response.headers['Content-Type'] = 'application/json'
         return response
 
