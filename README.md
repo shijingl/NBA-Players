@@ -14,7 +14,7 @@ https://www.virtualbox.org/wiki/Downloads
 ```
 Vagrantfile: 
 ```
-> https://s3.amazonaws.com/video.udacity-data.com/topher/2018/April/5acfbfa3_fsnd-virtual-machine/fsnd-virtual-machine.zip
+https://s3.amazonaws.com/video.udacity-data.com/topher/2018/April/5acfbfa3_fsnd-virtual-machine/fsnd-virtual-machine.zip
 ```
 1. Run 
 ```
