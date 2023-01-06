@@ -17,7 +17,7 @@ CLIENT_ID = json.loads(open('client_secrets.json',
                        'r').read())['web']['client_id']
 
 # Connect to Database
-engine = create_engine('sqlite:///itemcatalog.db',
+engine = create_engine('sqlite:///players.db',
                        connect_args={'check_same_thread': False})
 Base.metadata.bind = engine
 

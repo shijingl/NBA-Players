@@ -5,7 +5,7 @@ from sqlalchemy_utils import database_exists, drop_database, create_database
 
 from database_setup import Category, CategoryItem, User, Base
 
-engine = create_engine('sqlite:///itemcatalog.db',
+engine = create_engine('sqlite:///players.db',
                        connect_args={'check_same_thread': False})
 
 # Clear database
