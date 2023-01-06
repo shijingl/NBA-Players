@@ -3,40 +3,19 @@
 This project is a RESTful web application utilizing the Flask framework which accesses a SQL database that populates categories and their items. OAuth2 provides authentication for further CRUD functionality on the application. Currently OAuth2 is implemented for Google Accounts.
 
 **Preparation** 
-1. vagrant set up. 
-Vagrant: 
+1. Virtual environment set up
 ```
-https://www.vagrantup.com/downloads
+python3 -m venv venv_flask
 ```
-Virtualbox: 
-```
-https://www.virtualbox.org/wiki/Downloads 
-```
-Vagrantfile: 
-```
-https://s3.amazonaws.com/video.udacity-data.com/topher/2018/April/5acfbfa3_fsnd-virtual-machine/fsnd-virtual-machine.zip
-```
-1. Run 
-```
-vagrant up
-```
-, and then Run 
-```
-vagrant ssh
-```
-If you can successfully log in, then you are good. 
 
-2. Install Python 2.7.12
+2. Activate virtual environment
 ```
-https://www.python.org/download/releases/2.7/
+source venv_flask/bin/activate
 ```
-3. Setup sqlalchemy package for Python. Please run: 
+
+3. Install all the dependencies
 ```
-sudo pip install sqlalchemy 
-```
-4. Setup flask framework for Python. Please run: 
-```
-sudo pip install flask
+pip3 install -r requirements.txt
 ```
 
 **How to Run** 
