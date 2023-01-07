@@ -21,19 +21,19 @@ pip3 install -r requirements.txt
 **How to Run** 
 1. set up application database
 ```
-python database_setup.py
+python3 database_setup.py
 ```
 2. Insert fake players data 
 ```
-python players.py
+python3 players.py
 ```
 3. Run the application 
 ```
-python application.py
+python3 application.py
 ```
 4. Access the application locally using
 ```
-http://localhost:xxxx (In my Vagrantfile, I set it to be 44301)
+http://localhost:xxxx
 ```
 
 **Using Google Login**
