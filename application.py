@@ -111,8 +111,6 @@ def addCategoryItem():
         return redirect('/login')
 
     if request.method == 'POST':
-        # TODO: Retain data when there is an error
-
         if not request.form['name']:
             flash('Please add instrument name')
             return redirect(url_for('addCategoryItem'))
@@ -295,7 +293,6 @@ def gconnect():
     userinfo_url = "https://www.googleapis.com/oauth2/v1/userinfo"
     params = {'access_token': credentials.access_token, 'alt': 'json'}
     answer = requests.get(userinfo_url, params=params)
-
     data = answer.json()
 
     login_session['username'] = data['name']
